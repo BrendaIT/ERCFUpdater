@@ -24,7 +24,7 @@ link_extension()
     ln -sf "${SRCDIR}/Extra module/ercf.py" "${KLIPPER_PATH}/klippy/extras/ercf.py"
 }
 # Step 3: Update Config Files
-update_config()
+link_config()
 {
     ln -sf "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_hardware.cfg"
     ln -sf "${SRCDIR}/ercf_software.cfg" "${KLIPPER_CONFIG_PATH}/ercf_software.cfg"
@@ -58,7 +58,7 @@ EOF
     sudo systemctl enable ercf.service
 }
 
-# Step 4: restarting Klipper
+# Step 5: restarting Klipper
 restart_klipper()
 {
     echo "Restarting Klipper..."
@@ -90,5 +90,6 @@ done
 # Run steps
 verify_ready
 link_extension
+link_config
 install_script
 restart_klipper
