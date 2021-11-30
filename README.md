@@ -1,3 +1,28 @@
-Macros and python module for the ERCF V1.1
+# Installation instructions
 
-Refer to the ERCF manual for their installation and usage
+1. ssh into your pi and run the following commands.This will install the ERCF module and additional config files.
+
+`cd ~/`
+
+`gitclone https://github.com/cpiercedev/ERCFUpdater.git`
+
+`cd ERCFUpdater`
+
+`.\install.sh`
+
+
+2. Update your Moonraker.conf to include the following
+
+```
+[update_manager]
+enable_repo_debug: True
+
+[update_manager client ERCF]
+type: git_repo
+path: /home/pi/ERCFUpdater
+origin: https://github.com/cpiercedev/ERCFUpdater.git
+install_script: install.sh
+```
+
+3. Update ercf_user_vars.cfg and ercg_hardware.cfg to match your setup.
+4. ERCF will now be present in the update manager.
