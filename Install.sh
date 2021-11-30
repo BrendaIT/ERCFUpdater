@@ -3,6 +3,8 @@ KLIPPER_PATH="${HOME}/klipper"
 KLIPPER_CONFIG_PATH="${HOME}/klipper_config"
 SYSTEMDDIR="/etc/systemd/system"
 
+
+
 # Step 1:  Verify Klipper has been installed
 check_klipper()
 {
