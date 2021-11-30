@@ -23,6 +23,14 @@ link_extension()
     echo "Linking extension to Klipper..."
     ln -sf "${SRCDIR}/Extra module/ercf.py" "${KLIPPER_PATH}/klippy/extras/ercf.py"
 }
+# Step 3: Copy all config files if they do not exist
+copy_config()
+{
+    cp -n "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_hardware.cfg"
+    cp -n "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_vars.cfg"
+    cp -n "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_user_vars.cfg"
+    #cp -n "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/client_macros.cfg"
+}
 # Step 3: Update Config Files
 link_config()
 {
@@ -38,12 +46,7 @@ install_script()
     if [ -f $SERVICE_FILE ]; then
         sudo rm "$SERVICE_FILE"
     fi
-    OLD_SERVICE_FILE="${SYSTEMDDIR}/ercf.service"
-    if [ -f $OLD_SERVICE_FILE ]; then
-        sudo systemctl disable ercf.service
-        sudo rm "$OLD_SERVICE_FILE"
-        echo -e "CAUTION: THIS UPDATE WILL FAIL!\nYou need to rename the moonraker update confing from 'klipper_Z_calibration' to 'z_calibration'"
-    fi
+    
 
     echo "Installing system start script..."
     sudo /bin/sh -c "cat > ${SERVICE_FILE}" << EOF
