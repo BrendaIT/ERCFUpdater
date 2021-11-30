@@ -33,7 +33,7 @@ link_config()
 install_script()
 {
 # Create systemd service file
-    SERVICE_FILE="${SYSTEMDDIR}/ercf.service"
+    SERVICE_FILE="${SYSTEMDDIR}/ERCF.service"
     #[ -f $SERVICE_FILE ] && return
     if [ -f $SERVICE_FILE ]; then
         sudo rm "$SERVICE_FILE"
@@ -47,7 +47,7 @@ After=klipper.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/bin/bash -c 'exec -a ercf sleep 1'
+ExecStart=/bin/bash -c 'exec -a ERCF sleep 1'
 ExecStopPost=/usr/sbin/service klipper restart
 TimeoutStopSec=1s
 [Install]
