@@ -26,7 +26,7 @@ link_extension()
 # Step 3: Update Config Files
 link_config()
 {
-    ln -sf "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_hardware.cfg"
+    #ln -sf "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_hardware.cfg"
     ln -sf "${SRCDIR}/ercf_software.cfg" "${KLIPPER_CONFIG_PATH}/ercf_software.cfg"
 }
 # Step 4: Install startup script
