@@ -26,3 +26,10 @@ install_script: install.sh
 
 3. Update ercf_user_vars.cfg and ercg_hardware.cfg to match your setup.
 4. ERCF will now be present in the update manager.
+
+
+Install script modified from klipper_z_calibration
+https://github.com/protoloft/klipper_z_calibration
+
+Config/Module from Ette from the Enraged Rabit Project
+https://github.com/EtteGit/EnragedRabbitProject
