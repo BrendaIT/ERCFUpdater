@@ -1,5 +1,6 @@
 #!/bin/bash
 KLIPPER_PATH="${HOME}/klipper"
+KLIPPER_CONFIG_PATH="${HOME}/klipper_config"
 SYSTEMDDIR="/etc/systemd/system"
 
 # Step 1:  Verify Klipper has been installed
@@ -20,8 +21,13 @@ link_extension()
     echo "Linking extension to Klipper..."
     ln -sf "${SRCDIR}/Extra module/ercf.py" "${KLIPPER_PATH}/klippy/extras/ercf.py"
 }
-
-# Step 3: Install startup script
+# Step 3: Update Config Files
+update_config()
+{
+    ln -sf "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_hardware.cfg"
+    ln -sf "${SRCDIR}/ercf_software.cfg" "${KLIPPER_CONFIG_PATH}/ercf_software.cfg"
+}
+# Step 4: Install startup script
 install_script()
 {
 # Create systemd service file
