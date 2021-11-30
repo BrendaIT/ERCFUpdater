@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 KLIPPER_PATH="${HOME}/klipper"
 KLIPPER_CONFIG_PATH="${HOME}/klipper_config"
 SYSTEMDDIR="/etc/systemd/system"
