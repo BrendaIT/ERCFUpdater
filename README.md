@@ -16,9 +16,6 @@
 2. Update your Moonraker.conf to include the following
 
 ```
-[update_manager]
-enable_repo_debug: True
-
 [update_manager client ERCF]
 type: git_repo
 path: /home/pi/ERCFUpdater
