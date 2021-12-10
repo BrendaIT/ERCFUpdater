@@ -29,7 +29,6 @@ copy_config()
     cp -n "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/ercf_hardware.cfg"
     cp -n "${SRCDIR}/ercf_vars.cfg" "${KLIPPER_CONFIG_PATH}/ercf_vars.cfg"
     cp -n "${SRCDIR}/ercf_user_vars.cfg" "${KLIPPER_CONFIG_PATH}/ercf_user_vars.cfg"
-    #cp -n "${SRCDIR}/ercf_hardware.cfg" "${KLIPPER_CONFIG_PATH}/client_macros.cfg"
 }
 # Step 3: Update Config Files
 link_config()
