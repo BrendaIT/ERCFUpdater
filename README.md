@@ -8,9 +8,8 @@
 
 `gitclone https://github.com/cpiercedev/ERCFUpdater.git`
 
-`cd ERCFUpdater`
 
-`.\install.sh`
+`ERCFUpdater/install.sh`
 
 
 2. Update your Moonraker.conf to include the following
