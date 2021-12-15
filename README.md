@@ -6,7 +6,7 @@
 
 `cd ~/`
 
-`gitclone https://github.com/cpiercedev/ERCFUpdater.git`
+`git clone https://github.com/cpiercedev/ERCFUpdater.git`
 
 
 `ERCFUpdater/install.sh`
