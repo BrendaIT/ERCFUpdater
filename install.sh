@@ -40,7 +40,7 @@ link_config()
 install_script()
 {
 # Create systemd service file
-    SERVICE_FILE="${SYSTEMDDIR}/ercf.service"
+    SERVICE_FILE="${SYSTEMDDIR}/ERCFUpdater.service"
     #[ -f $SERVICE_FILE ] && return
     if [ -f $SERVICE_FILE ]; then
         sudo rm "$SERVICE_FILE"
@@ -50,7 +50,7 @@ install_script()
 echo "Installing system start script..."
 sudo /bin/sh -c "cat > ${SERVICE_FILE}" << EOF
 [Unit]
-Description=Dummy Service for ercf plugin
+Description=Dummy Service for ERCFUpdater plugin
 After=klipper.service
 [Service]
 Type=oneshot
@@ -63,7 +63,7 @@ WantedBy=multi-user.target
 EOF
 # Use systemctl to enable the systemd service script
     sudo systemctl daemon-reload
-    sudo systemctl enable ercf.service
+    sudo systemctl enable ERCFUpdater.service
 }
 
 # Step 5: restarting Klipper
