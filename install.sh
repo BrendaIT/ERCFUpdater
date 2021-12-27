@@ -40,22 +40,22 @@ link_config()
 install_script()
 {
 # Create systemd service file
-    SERVICE_FILE="${SYSTEMDDIR}/ERCF.service"
+    SERVICE_FILE="${SYSTEMDDIR}/ercf.service"
     #[ -f $SERVICE_FILE ] && return
     if [ -f $SERVICE_FILE ]; then
         sudo rm "$SERVICE_FILE"
     fi
     
 
-    echo "Installing system start script..."
-    sudo /bin/sh -c "cat > ${SERVICE_FILE}" << EOF
+echo "Installing system start script..."
+sudo /bin/sh -c "cat > ${SERVICE_FILE}" << EOF
 [Unit]
 Description=Dummy Service for ercf plugin
 After=klipper.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/bin/bash -c 'exec -a ERCF sleep 1'
+ExecStart=/bin/bash -c 'exec -a ercf sleep 1'
 ExecStopPost=/usr/sbin/service klipper restart
 TimeoutStopSec=1s
 [Install]
