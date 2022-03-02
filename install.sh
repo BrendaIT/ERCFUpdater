@@ -97,6 +97,7 @@ done
 
 # Run steps
 verify_ready
+copy_config
 link_extension
 link_config
 install_script
