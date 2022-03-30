@@ -1,6 +1,6 @@
 ## This will overwrite your ercf_software.cfg use at your own risk! 
-### I try to keep this as up to date as possible with the current configurations of the ERCF, but as it is done manually, some updates may take longer.
-### This has been tested using an EASYbrd and is what I am currently running on my machine, please reach out if you are having any issues. My discord username is @str1pes#8901.
+I try to keep this as up to date as possible with the current configurations of the ERCF, but as it is done manually, some updates may take longer.
+This has been tested using an EASYbrd and is what I am currently running on my machine, please reach out if you are having any issues. My discord username is @str1pes#8901.
 
 # Installation instructions
 
