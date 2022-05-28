@@ -272,7 +272,9 @@ class Ercf:
                                     " retry loading...")
             # Reengage gears and retry
             self.gcode.run_script_from_command(self.MACRO_SERVO_UP)
+            self.toolhead.wait_moves()
             self.gcode.run_script_from_command(self.MACRO_SERVO_DOWN)
+            self.toolhead.wait_moves()
             self._gear_stepper_move_wait(self.LONG_MOVE_THRESHOLD)
 
             if self._counter.get_distance() <= 6.:
@@ -314,9 +316,9 @@ class Ercf:
                     break
             # Load failed
             self.gcode.respond_info(
-                "Too much slippage detected during the load,"
-                " please check the ERCF, calling %s..."
-                % self.MACRO_PAUSE)
+				"Too much slippage detected during the load,"
+				" requested = %.1f, measured = %.1f - calling %s..."
+				%(req_length, counter_distance, self.MACRO_PAUSE))
             self.gcode.run_script_from_command(self.MACRO_UNSELECT_TOOL)
             self.gcode.run_script_from_command(self.MACRO_PAUSE)
 
@@ -371,8 +373,8 @@ class Ercf:
                     # Unload failed
                     self.gcode.respond_info(
                         "Too much slippage detected during the unload,"
-                        " please check the ERCF, calling %s..."
-                        % self.MACRO_PAUSE)
+						" requested = %.1f, measured = %.1f - calling %s..."
+                        %(req_length, counter_distance, self.MACRO_PAUSE))
                     self.gcode.run_script_from_command(self.MACRO_UNSELECT_TOOL)
                     self.gcode.run_script_from_command(self.MACRO_PAUSE)
                     return
@@ -435,10 +437,6 @@ class Ercf:
         travel = ( mcu_position - init_mcu_pos ) * selector_steps
         delta = abs( target_move - travel )
         if delta <= 2.0 :
-            commanded = self.selector_stepper.steppers[0].get_commanded_position()
-            frommcu = travel + init_position
-            self.gcode.respond_info("target = %.1f init_position = %.1f commanded = %.1f frommcu = %.1f"
-                                %(target, init_position, commanded, frommcu))
             self.selector_stepper.do_set_position( init_position + travel )
             self._selector_stepper_move_wait(target)
             return
@@ -470,10 +468,6 @@ class Ercf:
             travel = ( mcu_position - init_mcu_pos ) *selector_steps
             delta = abs( target_move - travel )
             if delta <= 2.0 :
-                commanded = self.selector_stepper.steppers[0].get_commanded_position()
-                frommcu = travel + init_position
-                self.gcode.respond_info("target = %.1f init_position = %.1f commanded = %.1f frommcu = %.1f"
-                                    %(target, init_position, commanded, frommcu))
                 self.selector_stepper.do_set_position( init_position + travel )
                 self._selector_stepper_move_wait(target)
                 return
@@ -501,7 +495,8 @@ class Ercf:
     cmd_ERCF_FINALIZE_LOAD_help = "Finalize the load of a tool to the nozzle"
     def cmd_ERCF_FINALIZE_LOAD(self, gcmd):
         length = gcmd.get_float('LENGTH', 30.0, above=0.)
-        threshold = gcmd.get_float('THRESHOLD', 15.0, above=0.)
+        tune = gcmd.get_int('TUNE', 0)
+        threshold = gcmd.get_float('THRESHOLD', 10.0, above=0.)
         if length is None :
             self.gcode.respond_info("LENGTH has to be specified")
             return
@@ -511,11 +506,21 @@ class Ercf:
         self.toolhead.manual_move(pos, 20)
         self.toolhead.wait_moves()
         final_encoder_pos = self._counter.get_distance()
-        if final_encoder_pos < ( length - threshold) :
+        if tune == 1 :
+            self.gcode.respond_info(
+                "Measured value from the encoder was %.1f"
+                % final_encoder_pos)
+            threshold_value = final_encoder_pos - 10.0
+            self.gcode.respond_info(
+                "Check the manual to verify that this load was sucessful, and if so, use the following value for your threshold parameter :  %.1f"
+                % threshold_value)
+            return
+        if (final_encoder_pos < threshold) :
             self.gcode.respond_info(
                 "Filament seems blocked between the extruder and the nozzle,"
+                "threshold is %.1f while measured value was %.1f,"
                 " calling %s..."
-                % self.MACRO_PAUSE)
+                % (threshold, final_encoder_pos, self.MACRO_PAUSE))
             self.gcode.run_script_from_command(self.MACRO_PAUSE)
             return
         self.gcode.respond_info("Filament loaded successfully")
